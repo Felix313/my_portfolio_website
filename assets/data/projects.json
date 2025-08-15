@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Portfolio Website",
+    "description": "The site you're viewing. Built with semantic HTML, modern CSS, and vanilla JS for speed and accessibility.",
+    "tags": ["HTML", "CSS", "JavaScript"],
+    "links": [
+      { "label": "Source", "url": "https://github.com/your-username/my_portfolio_website" }
+    ]
+  },
+  {
+    "title": "Sample API Project",
+    "description": "Example backend or API integration project placeholder. Replace or extend with your real project details.",
+    "tags": ["Node.js", "REST", "API"],
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/your-username/example-api" }
+    ]
+  }
+]
