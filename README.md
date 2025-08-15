@@ -16,7 +16,7 @@ Modern, fast, fully static personal portfolio you can host on GitHub Pages.
 
 1. Clone the repo (or fork on GitHub):
 	 ```bash
-	 git clone https://github.com/<your-username>/my_portfolio_website.git
+		git clone https://github.com/Felix313/my_portfolio_website.git
 	 cd my_portfolio_website
 	 ```
 2. Open `index.html` in your browser (double-click or use a local server).
@@ -28,7 +28,7 @@ Modern, fast, fully static personal portfolio you can host on GitHub Pages.
 1. On GitHub, go to Settings → Pages.
 2. Under "Build and deployment", choose: Source = `Deploy from a branch`.
 3. Select branch `main`, folder `/ (root)`, save.
-4. Wait ~1 minute; site appears at `https://<your-username>.github.io/my_portfolio_website/`.
+4. Wait ~1 minute; site appears at `https://Felix313.github.io/my_portfolio_website/`.
 5. (Optional) Custom domain: add `CNAME` file in root with your domain + configure DNS (A / ALIAS / CNAME records per GitHub docs).
 
 ## 🛠 Customize
