@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Kinxner Consulting Logo">
+  <rect width="256" height="256" rx="32" fill="#111418"/>
+  <g fill="none" stroke="#f1b02b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 176h176"/>
+    <path d="M60 176c22-74 38-112 68-112s46 38 68 112"/>
+    <circle cx="96" cy="104" r="10" fill="#f1b02b" stroke="none"/>
+    <circle cx="160" cy="104" r="10" fill="#f1b02b" stroke="none"/>
+    <circle cx="128" cy="72" r="12" fill="#f1b02b" stroke="none"/>
+  </g>
+  <text x="50%" y="232" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" fill="#f1b02b" letter-spacing="4">KINXNER</text>
+</svg>

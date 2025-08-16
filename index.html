@@ -1,32 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="de" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Felix | Portfolio</title>
-  <meta name="description" content="Personal portfolio of Felix – projects, skills, and contact information." />
+  <title>Kinxner Consulting | Data & Analytics Engineering</title>
+  <meta name="description" content="Kinxner Consulting – Boutique IT & Data Engineering Beratung: dbt, Airflow, Process Mining & Customer Journey Analytics." />
+  <link rel="canonical" href="https://kinxner-consulting.de/" />
   <meta name="color-scheme" content="light dark" />
+  <!-- Open Graph Core -->
+  <meta property="og:site_name" content="Kinxner Consulting" />
+  <meta property="og:url" content="https://kinxner-consulting.de/" />
+  <meta property="og:title" content="Kinxner Consulting" />
+  <meta property="og:description" content="Boutique Beratung für Data Engineering, Analytics Engineering, Process Mining & Customer Journey Insights." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://kinxner-consulting.de/og-image.png" />
+  <meta property="og:image:alt" content="Kinxner Consulting Logo mit Krone" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kinxner Consulting" />
+  <meta name="twitter:description" content="Data & Analytics Engineering: dbt, Airflow, Process Mining, Journey Analytics." />
+  <meta name="twitter:image" content="https://kinxner-consulting.de/og-image.png" />
+  <!-- Optional: set your Twitter @handle -->
+  <meta name="twitter:site" content="@yourhandle" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🚀</text></svg>">
-  <meta property="og:title" content="Felix | Portfolio" />
-  <meta property="og:description" content="Projects, skills and contact info." />
-  <meta property="og:type" content="website" />
+  <!-- Favicon / App Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo.png">
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <!-- Redundant old OG tags removed -->
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" role="banner">
     <div class="container header-inner">
-      <div class="brand">Felix<span class="accent">.</span></div>
+  <div class="brand"><img src="assets/img/logo.png" alt="Kinxner Consulting" style="height:32px;vertical-align:middle;" /> <span class="accent" style="margin-left:4px;">Kinxner</span></div>
       <nav aria-label="Main" class="nav" id="nav">
         <button class="nav__toggle" aria-controls="nav" aria-expanded="false" id="navToggle">Menu</button>
         <ul class="nav__list" id="navList">
-          <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <li><a href="#about">Über uns</a></li>
+            <li><a href="#skills">Kompetenzen</a></li>
+            <li><a href="#projects">Projekte</a></li>
+            <li><a href="#contact">Kontakt</a></li>
             <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
         </ul>
       </nav>
@@ -36,39 +53,44 @@
   <main id="main">
     <section class="hero" id="hero" aria-labelledby="hero-title">
       <div class="container">
-        <h1 id="hero-title">Hi, I'm Felix <span class="wave" aria-hidden="true">👋</span></h1>
-        <p class="lead">I build performant, user-focused web experiences.</p>
+        <h1 id="hero-title">Kinxner Consulting</h1>
+        <p class="lead">Boutique Beratung für Data & Analytics Engineering – dbt, Airflow, Process Mining & Customer Journey Insights seit 2023.</p>
         <div class="cta-group">
-          <a href="#projects" class="btn primary">View Projects</a>
-          <a href="#contact" class="btn secondary">Contact Me</a>
+          <a href="#projects" class="btn primary">Referenzen</a>
+          <a href="#contact" class="btn secondary">Kontakt</a>
         </div>
       </div>
     </section>
 
     <section id="about" class="section" aria-labelledby="about-title">
       <div class="container">
-        <h2 id="about-title">About</h2>
-        <p>Short bio goes here. Describe your background, what drives you, and what unique value you bring. Keep concise and authentic. You can replace this text in <code>index.html</code>.</p>
+        <h2 id="about-title">Über uns</h2>
+        <p>Kinxner Consulting ist ein kleines, fokussiertes IT & Data Engineering Team. Wir helfen Unternehmen dabei, Rohdaten in belastbare Entscheidungsgrundlagen zu verwandeln – mit moderner Analytics Engineering Praxis (dbt), robusten Orchestrierungen (Airflow), Process Mining zur Identifikation von Engpässen sowie Customer Journey Analysen zur Optimierung von Conversion und Retention.</p>
+        <p>Unser Ansatz: <strong>Schnelle Wertbeiträge in Wochen statt monatelanger Projekte</strong>, saubere Data Contracts, reproduzierbare Pipelines und nachvollziehbare Metriken. Wir arbeiten lean, dokumentieren automatisiert und übertragen Know‑how direkt ins Team unserer Kunden.</p>
       </div>
     </section>
 
     <section id="skills" class="section" aria-labelledby="skills-title">
       <div class="container">
-        <h2 id="skills-title">Skills</h2>
+        <h2 id="skills-title">Kompetenzen</h2>
         <ul class="skills" role="list">
-          <li>HTML5</li>
-          <li>CSS / Tailwind</li>
-          <li>JavaScript / TypeScript</li>
-          <li>React</li>
-          <li>Node.js</li>
-          <li>REST / APIs</li>
+          <li>Analytics Engineering (dbt)</li>
+          <li>Workflow Orchestrierung (Apache Airflow)</li>
+          <li>Process Mining & KPI Discovery</li>
+          <li>Customer Journey & Funnel Analytics</li>
+          <li>Datenmodellierung (Dimensional / Data Vault Light)</li>
+          <li>Cloud DWH (BigQuery / Snowflake / Redshift)</li>
+          <li>SQL Performance & Tests</li>
+          <li>Python (ETL/ELT, Automatisierung)</li>
+          <li>Event Tracking / Product Analytics</li>
+          <li>Data Quality & Observability</li>
         </ul>
       </div>
     </section>
 
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="container">
-        <h2 id="projects-title">Projects</h2>
+        <h2 id="projects-title">Projekte (Auswahl)</h2>
         <div id="projectsGrid" class="projects-grid" aria-live="polite"></div>
         <template id="projectCardTemplate">
           <article class="project-card">
@@ -80,16 +102,16 @@
             <div class="project-links"></div>
           </article>
         </template>
-        <p class="projects-fallback" id="projectsFallback" hidden>Projects coming soon. 🌱</p>
+        <p class="projects-fallback" id="projectsFallback" hidden>Weitere Referenzen auf Anfrage. 🌱</p>
       </div>
     </section>
 
     <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="container">
-        <h2 id="contact-title">Contact</h2>
-        <p>Want to collaborate or have a question? Reach out via email or socials.</p>
+        <h2 id="contact-title">Kontakt</h2>
+        <p>Interesse an einem unverbindlichen Austausch oder schnellem Audit? Melde dich – wir antworten in der Regel innerhalb eines Werktags.</p>
         <ul class="contact-list" role="list">
-          <li><a href="mailto:you@example.com">you@example.com</a></li>
+          <li><a href="mailto:contact@kinxner-consulting.de">contact@kinxner-consulting.de</a></li>
           <li><a href="https://github.com/Felix313" rel="noopener" target="_blank">GitHub</a></li>
           <li><a href="https://www.linkedin.com/in/your-handle" rel="noopener" target="_blank">LinkedIn</a></li>
         </ul>
@@ -99,7 +121,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; <span id="year"></span> Felix. Built with vanilla HTML/CSS/JS.</p>
+      <p>&copy; <span id="year"></span> Kinxner Consulting. Daten. Klarheit. Wirkung.</p>
       <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
     </div>
   </footer>
