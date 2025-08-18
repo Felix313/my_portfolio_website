@@ -146,3 +146,50 @@ function renderProjects(projects) {
 if (document.getElementById('projectCardTemplate')) {
   loadProjects();
 }
+
+// Logo-Video Interaktion (sequenzieller Fade ohne gleichzeitige Sichtbarkeit)
+const heroLogo = document.getElementById('heroLogo');
+const heroVideo = document.getElementById('heroVideo');
+if (heroLogo && heroVideo) {
+  heroLogo.style.cursor = 'pointer';
+  heroLogo.setAttribute('title', 'Video abspielen');
+  let animating = false;
+
+  function showVideo() {
+    if (animating) return;
+    animating = true;
+    heroLogo.classList.add('is-hidden');
+    const afterLogoFade = () => {
+      heroLogo.removeEventListener('transitionend', afterLogoFade);
+      heroVideo.classList.add('is-visible');
+      heroVideo.removeAttribute('aria-hidden');
+      heroVideo.currentTime = 0;
+      const playPromise = heroVideo.play();
+      if (playPromise?.catch) {
+        playPromise.catch(err => {
+          console.warn('[video] Play fehlgeschlagen', err);
+          heroVideo.setAttribute('controls', '');
+        });
+      }
+      // Warten bis Video sichtbar
+      setTimeout(() => { animating = false; }, 520);
+    };
+    heroLogo.addEventListener('transitionend', afterLogoFade, { once: true });
+  }
+
+  function showLogo() {
+    if (animating) return;
+    animating = true;
+    heroVideo.classList.remove('is-visible');
+    const afterVideoFade = () => {
+      heroVideo.setAttribute('aria-hidden', 'true');
+      heroLogo.classList.remove('is-hidden');
+      setTimeout(() => { animating = false; }, 520);
+    };
+    heroVideo.addEventListener('transitionend', afterVideoFade, { once: true });
+  }
+
+  heroLogo.addEventListener('click', showVideo);
+  heroVideo.addEventListener('ended', showLogo);
+  heroVideo.addEventListener('click', showLogo); // vorzeitiges Beenden per Klick
+}

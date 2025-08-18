@@ -90,6 +90,16 @@ a:hover, a:focus-visible { text-decoration: underline; }
 .hero-logo-wrapper { text-align:center; padding-top:.5rem; }
 .hero-logo { height:110px; width:auto; display:inline-block; margin:0 0 1rem; transition: transform .6s ease; }
 .hero-logo:hover { transform: scale(1.03); }
+/* Crossfade Setup */
+.hero-logo-wrapper { position:relative; }
+.hero-logo { position:relative; z-index:1; transition: opacity .5s ease, transform .6s ease; }
+.hero-logo.is-hidden { opacity:0; pointer-events:none; }
+.hero-video { position:absolute; top:0; left:50%; transform:translateX(-50%); height:110px; width:auto; margin:0 0 1rem; border:none; outline:none; background:#000; opacity:0; pointer-events:none; transition: opacity .5s ease; 
+  /* Vertikaler Zuschnitt: 5% oben & unten */
+  clip-path: inset(5% 0 10% 0);
+}
+.hero-video.is-visible { opacity:1; pointer-events:auto; }
+@media (min-width: 900px) { .hero-video, .hero-logo { height:560px; } }
 @media (min-width: 900px) { .hero-logo { height:560px; } }
 .hero-highlights { list-style:none; padding:0; margin:1.5rem 0 2rem; display:grid; gap:.5rem; max-width:620px; }
 .hero-highlights li { background: rgba(0 0 0 / .35); border:1px solid rgba(255 255 255 / .12); padding:.6rem .9rem; border-radius: var(--radius-sm); font-size:.9rem; backdrop-filter: blur(4px); }
