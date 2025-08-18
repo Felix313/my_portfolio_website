@@ -1,13 +1,5 @@
 [
   {
-    "title": "Process Mining Order-to-Cash (B2B SaaS)",
-    "description": "Extraktion Event-Log aus ERP & Billing, Discovery von Varianten, Engpassanalyse. Reduktion durchschnittlicher Durchlaufzeit um 18% durch Eliminierung manueller Freigabe-Schleifen.",
-    "tags": ["Process Mining", "Event Log", "Throughput"],
-    "links": [
-      { "label": "Konzept", "url": "https://en.wikipedia.org/wiki/Process_mining" }
-    ]
-  },
-  {
     "title": "E2E Customer Journey Analysen via Process Mining",
     "description": "Kombination klassischer Funnel Events mit Process-Mining-Event-Logs (Lead→Signup→Onboarding→Retention). Extraktion vereinheitlichter Case IDs aus CRM, Product Tracking & Billing. Discovery von Abbruchpfaden, KPI-Korrelationsanalyse (Cycle Time vs. Activation). Ergebnis: +11% schnellere Aktivierung und gezielte Reduktion von 3 friction steps durch UI & Messaging Anpassung.",
     "tags": ["Process Mining", "Journey Analytics", "Activation", "Retention"],
@@ -17,7 +9,7 @@
     ]
   },
   {
-    "title": "Modularer CX Datamart mit dbt auf Snowflake",
+    "title": "Modularer 360° Customer Experience Datamart mit dbt & Snowflake",
     "description": "Greenfield Aufbau eines Customer-Experience-Datamarts: Quellnormalisierung (stg), Harmonisierung (core) und domänenspezifische Marts (cx_marts). Nutzung von dbt Tests (unique, not_null, relationships), Source Freshness Checks, Slim CI und Dokumentation (dbt docs). Implementierung von SCD2 Light für Profil-Merges, Macro-gestützte KPI-Definition (NPS, Churn Flags) und YAML Data Contracts. Ergebnis: Reduktion Time-to-Insight von Tagen auf Stunden & 35% weniger Ad-hoc SQL-Anfragen.",
     "tags": ["dbt", "Snowflake", "Data Modeling", "CX"],
     "links": [
