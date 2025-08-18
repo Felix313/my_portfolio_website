@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="de" data-theme="light">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kinxner Consulting | Data & Analytics Engineering</title>
-  <meta name="description" content="Kinxner Consulting – Boutique IT & Data Engineering Beratung: dbt, Airflow, Process Mining & Customer Journey Analytics." />
+  <title>Kinxner Consulting | Data & AI Engineering</title>
+  <meta name="description" content="Kinxner Consulting – Boutique Beratung für Data & AI: Moderne Datenplattformen, dbt, Airflow, Process Mining & Journey Analytics seit 2023." />
   <link rel="canonical" href="https://kinxner-consulting.de/" />
   <meta name="color-scheme" content="light dark" />
   <!-- Open Graph Core -->
   <meta property="og:site_name" content="Kinxner Consulting" />
   <meta property="og:url" content="https://kinxner-consulting.de/" />
-  <meta property="og:title" content="Kinxner Consulting" />
-  <meta property="og:description" content="Boutique Beratung für Data Engineering, Analytics Engineering, Process Mining & Customer Journey Insights." />
+  <meta property="og:title" content="Kinxner Consulting – Data & AI" />
+  <meta property="og:description" content="Datenplattformen, Analytics Engineering (dbt), Airflow Orchestrierung, Process Mining & Journey Insights." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://kinxner-consulting.de/og-image.png" />
   <meta property="og:image:alt" content="Kinxner Consulting Logo mit Krone" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kinxner Consulting" />
-  <meta name="twitter:description" content="Data & Analytics Engineering: dbt, Airflow, Process Mining, Journey Analytics." />
+  <meta name="twitter:title" content="Kinxner Consulting – Data & AI" />
+  <meta name="twitter:description" content="Datenplattformen, dbt, Airflow, Process Mining, Journey Analytics." />
   <meta name="twitter:image" content="https://kinxner-consulting.de/og-image.png" />
   <!-- Optional: set your Twitter @handle -->
   <meta name="twitter:site" content="@yourhandle" />
@@ -30,43 +30,117 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/logo.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/img/logo.png">
   <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <script>document.documentElement.classList.add('js');</script>
   <!-- Redundant old OG tags removed -->
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" role="banner">
     <div class="container header-inner">
-  <div class="brand"><img src="assets/img/logo.png" alt="Kinxner Consulting" style="height:32px;vertical-align:middle;" /> <span class="accent" style="margin-left:4px;">Kinxner</span></div>
+  <div class="brand"><span class="accent" style="margin-left:4px;">Kinxner Consulting</span></div>
       <nav aria-label="Main" class="nav" id="nav">
-        <button class="nav__toggle" aria-controls="nav" aria-expanded="false" id="navToggle">Menu</button>
+        <button class="nav__toggle" aria-controls="navList" aria-expanded="false" id="navToggle" aria-label="Menü öffnen" title="Menü">
+          <span class="burger" aria-hidden="true"></span>
+        </button>
         <ul class="nav__list" id="navList">
           <li><a href="#about">Über uns</a></li>
             <li><a href="#skills">Kompetenzen</a></li>
             <li><a href="#projects">Projekte</a></li>
             <li><a href="#contact">Kontakt</a></li>
-            <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="container">
-        <h1 id="hero-title">Kinxner Consulting</h1>
-        <p class="lead">Boutique Beratung für Data & Analytics Engineering – dbt, Airflow, Process Mining & Customer Journey Insights seit 2023.</p>
+    <div class="hero-logo-wrapper">
+      <img src="assets/img/logo.png" class="hero-logo" alt="Kinxner Consulting" loading="lazy" />
+    </div>
+    <section class="hero hero--image" id="hero" aria-labelledby="hero-title">
+      <div class="hero__bg" role="presentation" aria-hidden="true"></div>
+      <div class="container hero__inner">
+        <h1 id="hero-title">Data & AI, die Wirkung entfaltet.</h1>
+        <p class="lead">Wir bauen belastbare Datenfundamente und intelligente Automatisierung – schlank, testbar, nachvollziehbar. Von Rohdaten zu Entscheidungen: schneller Mehrwert statt endloser Projekte.</p>
+        <ul class="hero-highlights" role="list">
+          <li>Moderne Datenmodelle mit <strong>dbt</strong></li>
+          <li>Stabile Pipelines via <strong>Airflow</strong></li>
+          <li><strong>Process Mining</strong> für Durchsatz & Qualität</li>
+          <li><strong>Journey Analytics</strong> für Conversion & Retention</li>
+        </ul>
         <div class="cta-group">
-          <a href="#projects" class="btn primary">Referenzen</a>
-          <a href="#contact" class="btn secondary">Kontakt</a>
+          <a href="#approach" class="btn primary">Vorgehen</a>
+          <a href="#contact" class="btn secondary">Kontakt aufnehmen</a>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section" aria-labelledby="about-title">
+    <section id="about" class="section section--alt" aria-labelledby="about-title">
+      <div class="container two-col">
+        <div>
+          <h2 id="about-title">Warum Kinxner?</h2>
+          <p>Wir verbinden <strong>Analytics Engineering</strong>, <strong>Workflow Orchestrierung</strong>, <strong>Process Mining</strong> und <strong>Journey Analytics</strong> zu einem ganzheitlichen Data & AI Ansatz. Kein Over-Engineering, sondern pragmatische Architektur mit klaren Qualitätskriterien.</p>
+          <p>Unsere Leitprinzipien: <em>Value first</em>, Transparenz durch Tests & Dokumentation, Automatisierung wo sinnvoll, enge Zusammenarbeit mit Fachbereichen.</p>
+          <ul class="check-list" role="list">
+            <li>Saubere Datenmodelle &amp; Data Contracts</li>
+            <li>Testbare, wiederholbare Pipelines</li>
+            <li>Messbare Prozessverbesserung</li>
+            <li>Verknüpfte Customer Journey KPIs</li>
+          </ul>
+        </div>
+        <div class="media-box">
+          <img src="assets\img\dashboard-viz.png" alt="Abstrakte Visualisierung vernetzter Datenpunkte" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section" aria-labelledby="services-title">
       <div class="container">
-        <h2 id="about-title">Über uns</h2>
-        <p>Kinxner Consulting ist ein kleines, fokussiertes IT & Data Engineering Team. Wir helfen Unternehmen dabei, Rohdaten in belastbare Entscheidungsgrundlagen zu verwandeln – mit moderner Analytics Engineering Praxis (dbt), robusten Orchestrierungen (Airflow), Process Mining zur Identifikation von Engpässen sowie Customer Journey Analysen zur Optimierung von Conversion und Retention.</p>
-        <p>Unser Ansatz: <strong>Schnelle Wertbeiträge in Wochen statt monatelanger Projekte</strong>, saubere Data Contracts, reproduzierbare Pipelines und nachvollziehbare Metriken. Wir arbeiten lean, dokumentieren automatisiert und übertragen Know‑how direkt ins Team unserer Kunden.</p>
+        <h2 id="services-title">Leistungsschwerpunkte</h2>
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>Datenplattform & Architektur</h3>
+            <p>Cloud‑DWH, Schichtenmodell, Governance & Observability – skalierbar und kosteneffizient.</p>
+            <p class="feature-tags">Stack: BigQuery · Snowflake · Redshift</p>
+          </article>
+          <article class="feature">
+            <h3>Analytics Engineering (dbt)</h3>
+            <p>Modulare Modelle, Tests, Docs & Deployment-Pipelines für verlässliche Business Metriken.</p>
+            <p class="feature-tags">dbt Core · dbt Cloud · CI</p>
+          </article>
+          <article class="feature">
+            <h3>Airflow Orchestrierung</h3>
+            <p>Zuverlässige DAGs mit SLAs, Alerting & Wiederanlaufstrategien – weniger Feuerlöschen.</p>
+            <p class="feature-tags">Airflow · TaskFlow · Sensors</p>
+          </article>
+          <article class="feature">
+            <h3>Process Mining</h3>
+            <p>Event Logs extrahieren, Varianten sichtbar machen, Engpässe quantifizieren & beseitigen.</p>
+            <p class="feature-tags">Order-to-Cash · Lead-to-Customer</p>
+          </article>
+            <article class="feature">
+            <h3>Journey & Funnel Analytics</h3>
+            <p>User Flows, Drop-Off Analyse, Attribution – Priorisierung für Produkt & Marketing.</p>
+            <p class="feature-tags">Tracking Layer · Warehouse Events</p>
+          </article>
+          <article class="feature">
+            <h3>AI Foundations</h3>
+            <p>Datenqualität, Feature Layer, Evaluierung & Guardrails für generative & klassische Modelle.</p>
+            <p class="feature-tags">LLMs · Embeddings · MLOps Light</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach" class="section section--alt" aria-labelledby="approach-title">
+      <div class="container">
+        <h2 id="approach-title">Unser Vorgehen</h2>
+        <ol class="approach-steps">
+          <li><strong>Discovery & Scope:</strong> Datenquellen, Pain Points, Quick Wins priorisieren (Workshops, KPI Canvas).</li>
+          <li><strong>Architektur & Baseline:</strong> Minimal tragfähige Plattform + erste dbt Modelle + orchestrierte Pipelines.</li>
+          <li><strong>Enablement & Qualitätslayer:</strong> Tests, Dokumentation, Observability, Handover Patterns.</li>
+          <li><strong>Scale & Automatisierung:</strong> Prozessoptimierung via Mining & Journey KPI Integration.</li>
+          <li><strong>AI Readiness:</strong> Feature Layer & Guardrails vorbereiten – produktive Experimente.</li>
+        </ol>
       </div>
     </section>
 
@@ -88,9 +162,9 @@
       </div>
     </section>
 
-    <section id="projects" class="section" aria-labelledby="projects-title">
+  <!-- <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="container">
-        <h2 id="projects-title">Projekte (Auswahl)</h2>
+    <h2 id="projects-title">Referenzen (Auswahl)</h2>
         <div id="projectsGrid" class="projects-grid" aria-live="polite"></div>
         <template id="projectCardTemplate">
           <article class="project-card">
@@ -104,16 +178,26 @@
         </template>
         <p class="projects-fallback" id="projectsFallback" hidden>Weitere Referenzen auf Anfrage. 🌱</p>
       </div>
+    </section> -->
+
+    <section id="cta" class="section cta-block" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <div>
+          <h2 id="cta-title">Das Potenzial Ihrer Daten – nur ein Gespräch entfernt</h2>
+          <p>In einem 30‑min Call klären wir Use Cases, Reifegrad & mögliche Quick Wins. Keine Folien‑Schlacht, sondern konkrete Optionen.</p>
+          <a href="#contact" class="btn primary">Gespräch anfragen</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=860&q=60" alt="Teamspirit" loading="lazy" class="cta-image" />
+      </div>
     </section>
 
     <section id="contact" class="section" aria-labelledby="contact-title">
       <div class="container">
         <h2 id="contact-title">Kontakt</h2>
-        <p>Interesse an einem unverbindlichen Austausch oder schnellem Audit? Melde dich – wir antworten in der Regel innerhalb eines Werktags.</p>
+        <p>Kurzfrage, Sparringsbedarf oder Startprojekt? <strong>Wir antworten innerhalb eines Werktags.</strong></p>
         <ul class="contact-list" role="list">
           <li><a href="mailto:contact@kinxner-consulting.de">contact@kinxner-consulting.de</a></li>
-          <li><a href="https://github.com/Felix313" rel="noopener" target="_blank">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/your-handle" rel="noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/kinxner-consulting/" rel="noopener" target="_blank">LinkedIn</a></li>
         </ul>
       </div>
     </section>
@@ -121,11 +205,11 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; <span id="year"></span> Kinxner Consulting. Daten. Klarheit. Wirkung.</p>
+  <p>&copy; <span id="year"></span> Kinxner Consulting. Daten. Klarheit. Wirkung.</p>
       <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
     </div>
   </footer>
 
-  <script src="assets/js/main.js" type="module" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>

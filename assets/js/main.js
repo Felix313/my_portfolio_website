@@ -7,28 +7,8 @@ const state = {
 function $(sel, ctx=document) { return ctx.querySelector(sel); }
 function $all(sel, ctx=document) { return Array.from(ctx.querySelectorAll(sel)); }
 
-// Theme toggle
-const themeToggle = $('#themeToggle');
+// Theme toggle removed (single theme design)
 const root = document.documentElement;
-const storedTheme = localStorage.getItem('theme');
-if (storedTheme) {
-  root.setAttribute('data-theme', storedTheme);
-  updateThemeButton(storedTheme);
-}
-
-function updateThemeButton(theme) {
-  if (!themeToggle) return;
-  themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
-  themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} theme`);
-}
-
-themeToggle?.addEventListener('click', () => {
-  const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-  const next = current === 'dark' ? 'light' : 'dark';
-  root.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  updateThemeButton(next);
-});
 
 // Dynamic year
 $('#year').textContent = new Date().getFullYear();
@@ -36,18 +16,39 @@ $('#year').textContent = new Date().getFullYear();
 // Mobile nav toggle
 const navToggle = $('#navToggle');
 const navList = $('#navList');
-navToggle?.addEventListener('click', () => {
+if (navList) navList.setAttribute('aria-hidden', 'true');
+navToggle?.addEventListener('click', (e) => {
+  console.debug('[nav] toggle click', e.target);
   const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', String(!expanded));
-  navList.classList.toggle('open');
+  const next = !expanded;
+  navToggle.setAttribute('aria-expanded', String(next));
+  navList.classList.toggle('open', next);
+  navList.setAttribute('aria-hidden', String(!next));
+  if (next) {
+    // Stagger items
+    const items = Array.from(navList.children).filter(n => n.tagName === 'LI');
+    items.forEach((li, i) => {
+      li.style.transitionDelay = (120 + i * 60) + 'ms';
+    });
+  } else {
+    Array.from(navList.children).forEach(li => li.style.transitionDelay = '0ms');
+  }
 });
+
+// Fallback binding if first didn\'t attach (older browsers)
+if (navToggle && !navToggle._boundOnce) {
+  navToggle._boundOnce = true;
+  navToggle.onclick ||= function(e){
+    console.debug('[nav] fallback onclick');
+    navToggle.dispatchEvent(new Event('click'));
+  };
+}
 
 // Close nav on link click (mobile)
 $all('#navList a').forEach(a => a.addEventListener('click', () => {
-  if (window.innerWidth <= 720) {
-    navList.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  }
+  navList.classList.remove('open');
+  navList.setAttribute('aria-hidden', 'true');
+  navToggle.setAttribute('aria-expanded', 'false');
 }));
 
 // Intersection Observer reveal animations
@@ -121,11 +122,3 @@ function renderProjects(projects) {
 }
 
 loadProjects();
-
-// Prefers color scheme initial alignment if no manual choice
-if (!storedTheme) {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const initial = prefersDark ? 'dark' : 'light';
-  root.setAttribute('data-theme', initial);
-  updateThemeButton(initial);
-}
