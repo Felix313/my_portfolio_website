@@ -94,8 +94,8 @@ a:hover, a:focus-visible { text-decoration: underline; }
 .hero-logo-wrapper { position:relative; }
 .hero-logo { position:relative; z-index:1; transition: opacity .5s ease, transform .6s ease; }
 .hero-logo.is-hidden { opacity:0; pointer-events:none; }
-.hero-video { position:absolute; top:0; left:50%; transform:translateX(-50%); height:110px; width:auto; margin:0 0 1rem; border:none; outline:none; background:#000; opacity:0; pointer-events:none; transition: opacity .5s ease; 
-  /* Vertikaler Zuschnitt: 5% oben & unten */
+.hero-video { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); height:110px; width:auto; margin:0 0 1rem; border:none; outline:none; background:#000; opacity:0; pointer-events:none; transition: opacity .5s ease; 
+  /* Zuschnitt: 5% oben, 10% unten; danach zentriert durch translate(-50%, -50%) */
   clip-path: inset(5% 0 10% 0);
 }
 .hero-video.is-visible { opacity:1; pointer-events:auto; }
