@@ -76,6 +76,10 @@ backToTop?.addEventListener('click', () => window.scrollTo({ top:0, behavior:'sm
 // Load projects from JSON
 async function loadProjects() {
   try {
+    // If projects section/template is not present, skip silently
+    if (!document.getElementById('projectCardTemplate') || !document.getElementById('projectsGrid')) {
+      return; // section removed
+    }
     const res = await fetch('assets/data/projects.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to load projects');
     const projects = await res.json();
@@ -89,12 +93,14 @@ async function loadProjects() {
 }
 
 function showProjectsFallback() {
-  $('#projectsFallback').hidden = false;
+  const fb = $('#projectsFallback');
+  if (fb) fb.hidden = false;
 }
 
 function renderProjects(projects) {
   const grid = $('#projectsGrid');
   const tpl = $('#projectCardTemplate');
+  if (!grid || !tpl) return; // safety
   projects.forEach(p => {
     const clone = tpl.content.cloneNode(true);
     const card = clone.querySelector('.project-card');
