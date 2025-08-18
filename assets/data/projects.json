@@ -24,7 +24,7 @@
       { "label": "dbt Docs", "url": "https://docs.getdbt.com/" },
       { "label": "Snowflake", "url": "https://www.snowflake.com/" }
     ]
-  }
+  },
     {
     "title": "Airflow Orchestrierung & SLAs (Subscription Plattform)",
     "description": "Konzeption robuster DAGs für Ingestion, Transformation, Reverse ETL. Implementierung von SLA Miss Alerts, Task Grouping und Template Macros zur Reduktion von Boilerplate um 40%.",
