@@ -16,39 +16,55 @@ $('#year').textContent = new Date().getFullYear();
 // Mobile nav toggle
 const navToggle = $('#navToggle');
 const navList = $('#navList');
+const navContainer = navToggle?.closest('.nav');
 if (navList) navList.setAttribute('aria-hidden', 'true');
-navToggle?.addEventListener('click', (e) => {
-  console.debug('[nav] toggle click', e.target);
+function toggleNav(next) {
   const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-  const next = !expanded;
+  if (typeof next !== 'boolean') next = !expanded;
   navToggle.setAttribute('aria-expanded', String(next));
   navList.classList.toggle('open', next);
   navList.setAttribute('aria-hidden', String(!next));
   if (next) {
-    // Stagger items
     const items = Array.from(navList.children).filter(n => n.tagName === 'LI');
-    items.forEach((li, i) => {
-      li.style.transitionDelay = (120 + i * 60) + 'ms';
-    });
+    items.forEach((li, i) => { li.style.transitionDelay = (120 + i * 60) + 'ms'; });
   } else {
     Array.from(navList.children).forEach(li => li.style.transitionDelay = '0ms');
   }
+}
+
+navToggle?.addEventListener('click', (e) => {
+  console.debug('[nav] toggle click', e.target);
+  toggleNav();
 });
 
-// Fallback binding if first didn\'t attach (older browsers)
-if (navToggle && !navToggle._boundOnce) {
-  navToggle._boundOnce = true;
-  navToggle.onclick ||= function(e){
-    console.debug('[nav] fallback onclick');
-    navToggle.dispatchEvent(new Event('click'));
+// Hover open (desktop pointer devices)
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && navContainer) {
+  let closeTimer = null;
+  const startCloseTimer = () => {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      navContainer.classList.remove('nav--hover');
+      toggleNav(false);
+    }, 300); // 300ms grace period
   };
+  const cancelClose = () => { clearTimeout(closeTimer); };
+  navContainer.addEventListener('mouseenter', () => {
+    cancelClose();
+    navContainer.classList.add('nav--hover');
+    toggleNav(true);
+  });
+  navContainer.addEventListener('mouseleave', startCloseTimer);
+  // Keep open when moving within list
+  navList?.addEventListener('mouseenter', cancelClose);
+  navList?.addEventListener('mouseleave', startCloseTimer);
 }
+
+// Fallback binding if first didn\'t attach (older browsers)
+// Removed recursive fallback onclick (was causing stack overflow)
 
 // Close nav on link click (mobile)
 $all('#navList a').forEach(a => a.addEventListener('click', () => {
-  navList.classList.remove('open');
-  navList.setAttribute('aria-hidden', 'true');
-  navToggle.setAttribute('aria-expanded', 'false');
+  toggleNav(false);
 }));
 
 // Intersection Observer reveal animations
@@ -75,11 +91,10 @@ backToTop?.addEventListener('click', () => window.scrollTo({ top:0, behavior:'sm
 
 // Load projects from JSON
 async function loadProjects() {
+  const tplEl = document.getElementById('projectCardTemplate');
+  const gridEl = document.getElementById('projectsGrid');
+  if (!tplEl || !gridEl) return; // section not present
   try {
-    // If projects section/template is not present, skip silently
-    if (!document.getElementById('projectCardTemplate') || !document.getElementById('projectsGrid')) {
-      return; // section removed
-    }
     const res = await fetch('assets/data/projects.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to load projects');
     const projects = await res.json();
@@ -87,7 +102,7 @@ async function loadProjects() {
     renderProjects(projects);
     state.projectsLoaded = true;
   } catch (err) {
-    console.warn(err);
+    console.warn('[projects] load failed:', err);
     showProjectsFallback();
   }
 }
@@ -98,9 +113,9 @@ function showProjectsFallback() {
 }
 
 function renderProjects(projects) {
-  const grid = $('#projectsGrid');
-  const tpl = $('#projectCardTemplate');
-  if (!grid || !tpl) return; // safety
+    const grid = $('#projectsGrid');
+    const tpl = $('#projectCardTemplate');
+    if (!grid || !tpl) return; // safety
   projects.forEach(p => {
     const clone = tpl.content.cloneNode(true);
     const card = clone.querySelector('.project-card');
@@ -127,4 +142,7 @@ function renderProjects(projects) {
   });
 }
 
-loadProjects();
+// Only call if template exists (idempotent safety already, but cheap guard)
+if (document.getElementById('projectCardTemplate')) {
+  loadProjects();
+}

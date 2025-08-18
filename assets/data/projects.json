@@ -1,21 +1,5 @@
 [
   {
-    "title": "dbt Modern Data Stack Einführung (E-Commerce)",
-    "description": "Ablösung monolithischer SQL-Skripte durch modularisierte dbt-Modelle inkl. Tests & Dokumentation. Aufbau eines schichtenbasierten Modells (staging, core, marts) und Etablierung von CI Prüfläufen.",
-    "tags": ["dbt", "Analytics Engineering", "Data Quality"],
-    "links": [
-      { "label": "Tech Overview", "url": "https://docs.getdbt.com/" }
-    ]
-  },
-  {
-    "title": "Airflow Orchestrierung & SLAs (Subscription Plattform)",
-    "description": "Konzeption robuster DAGs für Ingestion, Transformation, Reverse ETL. Implementierung von SLA Miss Alerts, Task Grouping und Template Macros zur Reduktion von Boilerplate um 40%.",
-    "tags": ["Apache Airflow", "Orchestration", "Monitoring"],
-    "links": [
-      { "label": "Airflow", "url": "https://airflow.apache.org/" }
-    ]
-  },
-  {
     "title": "Process Mining Order-to-Cash (B2B SaaS)",
     "description": "Extraktion Event-Log aus ERP & Billing, Discovery von Varianten, Engpassanalyse. Reduktion durchschnittlicher Durchlaufzeit um 18% durch Eliminierung manueller Freigabe-Schleifen.",
     "tags": ["Process Mining", "Event Log", "Throughput"],
@@ -24,11 +8,29 @@
     ]
   },
   {
-    "title": "Customer Journey Funnel Analytics (Marketplace)",
-    "description": "Aufbau eines einheitlichen Tracking-Layers, Session Stitching und Multi-Touch Funnel KPIs. Identifikation von Drop-Off Segmenten → +9% Conversion uplift durch UI Vereinfachung.",
-    "tags": ["Customer Journey", "Funnel", "Attribution"],
+    "title": "E2E Customer Journey Analysen via Process Mining",
+    "description": "Kombination klassischer Funnel Events mit Process-Mining-Event-Logs (Lead→Signup→Onboarding→Retention). Extraktion vereinheitlichter Case IDs aus CRM, Product Tracking & Billing. Discovery von Abbruchpfaden, KPI-Korrelationsanalyse (Cycle Time vs. Activation). Ergebnis: +11% schnellere Aktivierung und gezielte Reduktion von 3 friction steps durch UI & Messaging Anpassung.",
+    "tags": ["Process Mining", "Journey Analytics", "Activation", "Retention"],
     "links": [
-      { "label": "Methodik", "url": "https://mixpanel.com/topics/funnel-analysis/" }
+      { "label": "Process Mining", "url": "https://en.wikipedia.org/wiki/Process_mining" },
+      { "label": "Journey KPIs", "url": "https://amplitude.com/blog/customer-journey-analytics" }
+    ]
+  },
+  {
+    "title": "Modularer CX Datamart mit dbt auf Snowflake",
+    "description": "Greenfield Aufbau eines Customer-Experience-Datamarts: Quellnormalisierung (stg), Harmonisierung (core) und domänenspezifische Marts (cx_marts). Nutzung von dbt Tests (unique, not_null, relationships), Source Freshness Checks, Slim CI und Dokumentation (dbt docs). Implementierung von SCD2 Light für Profil-Merges, Macro-gestützte KPI-Definition (NPS, Churn Flags) und YAML Data Contracts. Ergebnis: Reduktion Time-to-Insight von Tagen auf Stunden & 35% weniger Ad-hoc SQL-Anfragen.",
+    "tags": ["dbt", "Snowflake", "Data Modeling", "CX"],
+    "links": [
+      { "label": "dbt Docs", "url": "https://docs.getdbt.com/" },
+      { "label": "Snowflake", "url": "https://www.snowflake.com/" }
+    ]
+  }
+    {
+    "title": "Airflow Orchestrierung & SLAs (Subscription Plattform)",
+    "description": "Konzeption robuster DAGs für Ingestion, Transformation, Reverse ETL. Implementierung von SLA Miss Alerts, Task Grouping und Template Macros zur Reduktion von Boilerplate um 40%.",
+    "tags": ["Apache Airflow", "Orchestration", "Monitoring"],
+    "links": [
+      { "label": "Airflow", "url": "https://airflow.apache.org/" }
     ]
   }
 ]
