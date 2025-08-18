@@ -193,3 +193,51 @@ if (heroLogo && heroVideo) {
   heroVideo.addEventListener('ended', showLogo);
   heroVideo.addEventListener('click', showLogo); // vorzeitiges Beenden per Klick
 }
+
+// Dynamischer Header (groß oben, kompakt beim Scroll, Navigation inline nur oben)
+(function dynamicHeader(){
+  const header = document.querySelector('.site-header');
+  if(!header) return;
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  // Hysterese: zwei Schwellen verhindern Hin- und Herschalten bei Größenänderung
+  const ENTER_TOP = 15;   // Punkt der klar unterschritten werden muss um wieder groß zu werden
+  const LEAVE_TOP = 110;  // deutlich höherer Punkt um klein zu werden
+  const TRANSITION_LOCK_MS = 150; // Sperrzeit nach Wechsel
+  let isTop = true; // initial oben
+  let ticking = false;
+  let lastChange = performance.now();
+
+  function setState(next){
+    if(next === isTop) return;
+    isTop = next;
+    lastChange = performance.now();
+    header.classList.toggle('is-top', isTop);
+    // Menü einklappen (verhindert Zwischenzustand)
+    navList?.classList.remove('open');
+    navToggle?.setAttribute('aria-expanded','false');
+  }
+
+  function onScroll(){
+    const y = window.scrollY;
+    const since = performance.now() - lastChange;
+    if(isTop){
+      // Nur wechseln wenn wir klar über dem oberen Schwellwert sind & nicht mitten in Sperrzeit
+      if(y > LEAVE_TOP && since > TRANSITION_LOCK_MS) setState(false);
+    } else {
+      // Zurück nur wenn wirklich fast oben (unter ENTER_TOP) & Sperre vorbei
+      if(y < ENTER_TOP && since > TRANSITION_LOCK_MS) setState(true);
+    }
+  }
+
+  function rafScroll(){
+    if(!ticking){
+      requestAnimationFrame(() => { onScroll(); ticking = false; });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', rafScroll, { passive:true });
+  window.addEventListener('load', onScroll);
+  onScroll();
+})();

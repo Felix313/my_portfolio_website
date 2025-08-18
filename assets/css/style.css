@@ -47,8 +47,10 @@ a:hover, a:focus-visible { text-decoration: underline; }
 .skip-link { position: absolute; left: -999px; top: auto; width:1px; height:1px; overflow:hidden; }
 .skip-link:focus { left: 0; top:0; width:auto; height:auto; padding:.75rem 1rem; background: var(--color-accent); color:#fff; z-index:1000; }
 
-.site-header { position: sticky; top:0; backdrop-filter: blur(8px); background: rgba(var(--color-accent-rgb) / 0.06); border-bottom:1px solid var(--color-border); z-index: 50; }
-.header-inner { display:flex; align-items:center; justify-content:space-between; min-height:60px; }
+.site-header { position: sticky; top:0; backdrop-filter: blur(8px); background: rgba(var(--color-accent-rgb) / 0.06); border-bottom:1px solid var(--color-border); z-index: 50; transition: background .35s ease, box-shadow .35s ease; }
+.site-header.is-top { background:transparent; box-shadow:none; }
+.header-inner { display:flex; align-items:center; justify-content:space-between; min-height:72px; transition:min-height .35s ease; }
+.site-header.is-top .header-inner { min-height:120px; }
 .nav { position:relative; }
 .brand { font-size:1.25rem; font-weight:600; letter-spacing:.5px; }
 .brand .accent { background: var(--gradient-accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -63,6 +65,13 @@ a:hover, a:focus-visible { text-decoration: underline; }
 .nav__list { list-style:none; margin:0; padding:0; display:flex; flex-direction:row; gap:1rem; }
 .js .nav__list { position:absolute; top:100%; right:0; margin-top:8px; flex-direction:column; background: var(--color-surface); padding:.85rem .9rem; border:1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-md); min-width:210px; opacity:0; transform:translateY(-6px); pointer-events:none; transition: opacity .25s ease, transform .3s ease; z-index:250; }
 .js .nav__list.open { opacity:1; transform:translateY(0); pointer-events:auto; }
+/* Top Zustand: Liste inline zeigen, Toggle verstecken */
+.site-header.is-top .nav__toggle { display:none; }
+.site-header.is-top .nav__list { position:static; margin:0; flex-direction:row; background:transparent; padding:0; border:0; box-shadow:none; opacity:1 !important; transform:none !important; pointer-events:auto; gap:1.25rem; }
+.site-header.is-top .nav__list li { opacity:1 !important; transform:none !important; transition:none; }
+.site-header:not(.is-top) .nav__list { display:none; }
+.site-header:not(.is-top) .nav__list.open { display:flex; }
+.site-header:not(.is-top) { box-shadow:0 4px 12px -4px rgba(0 0 0 / .5); }
 .js .nav__list li { opacity:0; transform:translateX(14px); transition: opacity .35s ease, transform .5s cubic-bezier(.16,.84,.44,1); }
 .js .nav__list.open li { opacity:1; transform:none; }
 
