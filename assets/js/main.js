@@ -262,36 +262,39 @@ if (heroLogo && heroVideo) {
   window.addEventListener('resize', resize);
 
   const particles = [];
-  const MAX_PARTICLES = 380; // weniger nötig, Bars sind größer / teurer zu zeichnen
+  // Device check for mobile/slow devices
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+  const MAX_PARTICLES = isMobile ? 120 : 320;
   let lastScrollY = window.scrollY;
   let accSpawn = 0; // akkumuliertes Spawnbudget aus Scrollbewegung
 
   function spawn(n){
     for(let i=0;i<n && particles.length<MAX_PARTICLES;i++){
       const centerBias = Math.random();
-      const thicknessBase = Math.random()*3.2 + 3.2; // Basis für Bar-Dicke
-      const width = thicknessBase * (8 + Math.random()*5); // Goldbarren länger
-      const height = thicknessBase * (2.2 + Math.random()*0.8); // flach
-      const depth = Math.min(height*0.55, width*0.18); // pseudo Tiefe für 3D Kante
+      // Make bars thicker, shorter, more metallic
+      const thicknessBase = Math.random()*4.2 + 5.2; // dicker
+      const width = thicknessBase * (6.5 + Math.random()*3.5); // etwas kürzer
+      const height = thicknessBase * (2.8 + Math.random()*1.2); // dicker
+      const depth = Math.min(height*0.7, width*0.22); // mehr Tiefe
       const xPos = centerBias < 0.60
-        ? (w/2) + (Math.random()-0.5) * w * 0.40
+        ? (w/2) + (Math.random()-0.5) * w * 0.38
         : Math.random()*w;
       particles.push({
         shape: 'bar',
         x: xPos,
         y: -40 - Math.random()*140,
-        vy: 55 + Math.random()*85,
-        vx: (Math.random()-0.5)*14,
+        vy: 45 + Math.random()*65,
+        vx: (Math.random()-0.5)*10,
         width,
         height,
         depth,
         life: 0,
-        ttl: 3200 + Math.random()*2600,
+        ttl: 3400 + Math.random()*2200,
         spin: Math.random()*Math.PI*2,
-        spinV: (Math.random()-0.5)*0.22,
-        roll: (Math.random()-0.5)*0.35, // leichte seitliche Roll-Neigung
-        rollV: (Math.random()-0.5)*0.05,
-        sheenOffset: Math.random(), // für wandernden Glanz
+        spinV: (Math.random()-0.5)*0.18,
+        roll: (Math.random()-0.5)*0.28,
+        rollV: (Math.random()-0.5)*0.04,
+        sheenOffset: Math.random(),
       });
     }
   }
@@ -313,28 +316,30 @@ if (heroLogo && heroVideo) {
   }
 
   function drawBar(p){
-    const appear = Math.min(1, p.life/320); // sanfteres Einblenden
+    const appear = Math.min(1, p.life/320);
     const lifeLeft = 1 - Math.min(1, p.life / p.ttl);
     const wBar = p.width;
     const hBar = p.height;
-    const d = p.depth; // pseudo depth
+    const d = p.depth;
     ctx.save();
     ctx.translate(p.x, p.y);
-    ctx.rotate(p.spin * 0.6); // reduzierte Rotation um Übelkeit zu vermeiden
-    ctx.transform(1, p.roll*0.18, 0, 1, 0, 0); // leichte Scherung als Perspektive
-    // Face Gradient
+    ctx.rotate(p.spin * 0.5);
+    ctx.transform(1, p.roll*0.14, 0, 1, 0, 0);
+    // Face Gradient: dunkler, satter, metallic
     const g = ctx.createLinearGradient(-wBar/2, -hBar/2, wBar/2, hBar/2);
-    g.addColorStop(0, `rgba(255,252,230,${0.95*appear})`);
-    g.addColorStop(0.18, `rgba(255,235,170,${0.90*appear})`);
-    g.addColorStop(0.42, `rgba(246,204,92,${0.88*appear})`);
-    g.addColorStop(0.70, `rgba(235,176,45,${0.92*appear})`);
-    g.addColorStop(1, `rgba(170,115,10,${0.85*appear})`);
-    // Hauptfläche
+    g.addColorStop(0, `rgba(220,200,120,${0.98*appear})`);
+    g.addColorStop(0.18, `rgba(210,180,80,${0.93*appear})`);
+    g.addColorStop(0.42, `rgba(180,140,60,${0.90*appear})`);
+    g.addColorStop(0.70, `rgba(140,100,40,${0.92*appear})`);
+    g.addColorStop(1, `rgba(90,60,20,${0.85*appear})`);
     ctx.fillStyle = g;
-    const r = Math.min(6, hBar*0.35); // abgerundete Ecke
+    const r = Math.min(7, hBar*0.38);
     roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
+    ctx.shadowColor = 'rgba(60,40,10,0.18)';
+    ctx.shadowBlur = 8;
     ctx.fill();
-    // Obere abgeschrägte Kante (Pseudo 3D Top)
+    ctx.shadowBlur = 0;
+    // Top bevel (Pseudo 3D Top)
     ctx.beginPath();
     ctx.moveTo(-wBar/2, -hBar/2);
     ctx.lineTo(-wBar/2 + d, -hBar/2 - d);
@@ -342,11 +347,11 @@ if (heroLogo && heroVideo) {
     ctx.lineTo(wBar/2, -hBar/2);
     ctx.closePath();
     const topGrad = ctx.createLinearGradient(0, -hBar/2 - d, 0, -hBar/2 + d);
-    topGrad.addColorStop(0, `rgba(255,250,215,${0.95*appear})`);
-    topGrad.addColorStop(1, `rgba(240,195,70,${0.85*appear})`);
+    topGrad.addColorStop(0, `rgba(255,255,220,${0.92*appear})`);
+    topGrad.addColorStop(1, `rgba(180,150,60,${0.82*appear})`);
     ctx.fillStyle = topGrad;
     ctx.fill();
-    // Linke Seitenkante
+    // Left side bevel
     ctx.beginPath();
     ctx.moveTo(-wBar/2, -hBar/2);
     ctx.lineTo(-wBar/2 + d, -hBar/2 - d);
@@ -354,27 +359,27 @@ if (heroLogo && heroVideo) {
     ctx.lineTo(-wBar/2, hBar/2);
     ctx.closePath();
     const sideGrad = ctx.createLinearGradient(-wBar/2, 0, -wBar/2 + d, 0);
-    sideGrad.addColorStop(0, `rgba(180,120,15,${0.9*appear})`);
-    sideGrad.addColorStop(1, `rgba(230,170,40,${0.85*appear})`);
+    sideGrad.addColorStop(0, `rgba(110,80,20,${0.88*appear})`);
+    sideGrad.addColorStop(1, `rgba(180,150,60,${0.82*appear})`);
     ctx.fillStyle = sideGrad;
     ctx.fill();
-    // Glanzstreifen (Sheen) läuft wandernd über Front
-    const sheenPos = (p.sheenOffset + p.life/2400) % 1; // 0..1
+    // Metallic shine (sheen)
+    const sheenPos = (p.sheenOffset + p.life/2200) % 1;
     const sheenX = -wBar/2 + sheenPos * wBar;
-    const sheenWidth = wBar*0.18;
+    const sheenWidth = wBar*0.13;
     const sheenGrad = ctx.createLinearGradient(sheenX - sheenWidth, 0, sheenX + sheenWidth, 0);
     sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-    sheenGrad.addColorStop(0.48, `rgba(255,255,255,${0.40*appear*lifeLeft})`);
-    sheenGrad.addColorStop(0.52, `rgba(255,255,255,${0.40*appear*lifeLeft})`);
+    sheenGrad.addColorStop(0.48, `rgba(255,255,255,${0.32*appear*lifeLeft})`);
+    sheenGrad.addColorStop(0.52, `rgba(255,255,255,${0.32*appear*lifeLeft})`);
     sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.globalCompositeOperation = 'lighter';
     ctx.fillStyle = sheenGrad;
     roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
-    // Dezente Kontur
-    ctx.strokeStyle = `rgba(120,75,5,${0.25*appear})`;
-    ctx.lineWidth = 1;
+    // Subtle outline
+    ctx.strokeStyle = `rgba(80,60,20,${0.22*appear})`;
+    ctx.lineWidth = 1.2;
     roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
     ctx.stroke();
     ctx.restore();
@@ -416,8 +421,10 @@ if (heroLogo && heroVideo) {
     const y = window.scrollY;
     const delta = Math.abs(y - lastScrollY);
     lastScrollY = y;
-    // Angepasste Rate für größere Bars (etwas weniger oft)
-    accSpawn += delta * 0.4 + (y>150 ? 1.2 : 0.15);
+    // Reduce spawn rate for mobile
+    const spawnFactor = isMobile ? 0.18 : 0.32;
+    const baseSpawn = isMobile ? 0.08 : 0.18;
+    accSpawn += delta * spawnFactor + (y>150 ? baseSpawn : baseSpawn/2);
     const toCreate = Math.floor(accSpawn);
     if(toCreate>0){
       spawn(toCreate);
@@ -427,10 +434,10 @@ if (heroLogo && heroVideo) {
 
   // Periodische Bursts für "Show"-Effekt
   function burst(mult=1){
-    const base = 20 + Math.random()*25; // 20-45 Bars
+    const base = isMobile ? 8 + Math.random()*8 : 16 + Math.random()*18;
     spawn(Math.floor(base*mult));
   }
-  const burstInterval = setInterval(() => { burst(1.5); }, 5000);
+  const burstInterval = setInterval(() => { burst(isMobile ? 1.2 : 1.5); }, isMobile ? 7000 : 5000);
 
   // Section-Observer: Beim erstmaligen Erscheinen einer Section extra Glitzer
   const secObserver = new IntersectionObserver(entries => {
@@ -444,5 +451,5 @@ if (heroLogo && heroVideo) {
   document.querySelectorAll('section').forEach(s => secObserver.observe(s));
 
   // Initial kräftiger Startschub
-  spawn(90);
+  spawn(isMobile ? 32 : 70);
 })();
