@@ -242,7 +242,7 @@ if (heroLogo && heroVideo) {
   onScroll();
 })();
 
-// Goldregen Effekt (Scroll-getriebene Partikel)
+// Dollar Rain Effekt (Scroll-getriebene Partikel)
 (function goldRain(){
   const canvas = document.getElementById('goldRainCanvas');
   if(!canvas) return;
@@ -264,37 +264,36 @@ if (heroLogo && heroVideo) {
   const particles = [];
   // Device check for mobile/slow devices
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent);
-  const MAX_PARTICLES = isMobile ? 120 : 320;
+  const MAX_PARTICLES = isMobile ? 40 : 90;
   let lastScrollY = window.scrollY;
   let accSpawn = 0; // akkumuliertes Spawnbudget aus Scrollbewegung
 
   function spawn(n){
     for(let i=0;i<n && particles.length<MAX_PARTICLES;i++){
       const centerBias = Math.random();
-      // Make bars thicker, shorter, more metallic
-      const thicknessBase = Math.random()*4.2 + 5.2; // dicker
-      const width = thicknessBase * (6.5 + Math.random()*3.5); // etwas kürzer
-      const height = thicknessBase * (2.8 + Math.random()*1.2); // dicker
-      const depth = Math.min(height*0.7, width*0.22); // mehr Tiefe
-      const xPos = centerBias < 0.60
-        ? (w/2) + (Math.random()-0.5) * w * 0.38
-        : Math.random()*w;
+      // US Dollar Bill approx ratio ~2.35 : 1 (width : height)
+      const baseH = (isMobile ? (12 + Math.random()*8) : (16 + Math.random()*12));
+      const height = baseH; // css px (pre-DPR)
+      const width  = height * (2.2 + Math.random()*0.35);
+      const xPos = centerBias < 0.55 ? (w/2) + (Math.random()-0.5) * w * 0.42 : Math.random()*w;
       particles.push({
-        shape: 'bar',
+        shape: 'bill',
         x: xPos,
-        y: -40 - Math.random()*140,
-        vy: 45 + Math.random()*65,
-        vx: (Math.random()-0.5)*10,
+        y: -20 - Math.random()*120,
+        vy: 28 + Math.random()*38, // langsameres Fallen
+        vx: (Math.random()-0.5)*14, // leichter Wind
         width,
         height,
-        depth,
         life: 0,
-        ttl: 3400 + Math.random()*2200,
-        spin: Math.random()*Math.PI*2,
-        spinV: (Math.random()-0.5)*0.18,
-        roll: (Math.random()-0.5)*0.28,
-        rollV: (Math.random()-0.5)*0.04,
-        sheenOffset: Math.random(),
+        ttl: 4200 + Math.random()*2600,
+        angle: Math.random()*Math.PI*2,
+        angleV: (Math.random()-0.5)*0.35, // Rotation
+        swayAmp: 10 + Math.random()*26,   // horizontale Pendel-Amplitude
+        swayFreq: 0.0012 + Math.random()*0.0016, // in 1/ms
+        flutterAmp: 0.12 + Math.random()*0.22, // Rotations-Pendel
+        flutterFreq: 0.0015 + Math.random()*0.0018,
+        seed: Math.random()*Math.PI*2,
+        tint: 0.85 + Math.random()*0.3, // Helligkeitsvariation
       });
     }
   }
@@ -304,84 +303,78 @@ if (heroLogo && heroVideo) {
       const p = particles[i];
       p.life += dt;
       if(p.life>p.ttl){ particles.splice(i,1); continue; }
-      p.y += p.vy * dt/1000;
-      p.x += p.vx * dt/1000;
-      p.vx *= 0.994; // minimaler drift decay
-      p.spin += p.spinV * dt/16.6; // dt normieren (~60fps)
-      p.roll += p.rollV * dt/16.6;
-      // leichte sinkende Roll-Verlangsamung
-      p.rollV *= 0.999;
+      const tSec = dt/1000;
+      p.y += p.vy * tSec;
+      p.x += p.vx * tSec;
+      // leichter Luftwiderstand
+      p.vx *= 0.996;
+      // Rotation + Flutter
+      const t = p.life;
+      p.angle += p.angleV * tSec + Math.sin(t * p.flutterFreq + p.seed) * p.flutterAmp * 0.02;
       if(p.y - p.height > h) { particles.splice(i,1); }
     }
   }
-
-  function drawBar(p){
+  function drawBill(p){
     const appear = Math.min(1, p.life/320);
     const lifeLeft = 1 - Math.min(1, p.life / p.ttl);
-    const wBar = p.width;
-    const hBar = p.height;
-    const d = p.depth;
+    const wB = p.width;
+    const hB = p.height;
+    // Sway offset
+    const sway = Math.sin(p.life * p.swayFreq + p.seed) * p.swayAmp;
+    // Flutter angle component
+    const flutter = Math.sin(p.life * p.flutterFreq + p.seed*1.7) * 0.35;
     ctx.save();
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.spin * 0.5);
-    ctx.transform(1, p.roll*0.14, 0, 1, 0, 0);
-    // Face Gradient: dunkler, satter, metallic
-    const g = ctx.createLinearGradient(-wBar/2, -hBar/2, wBar/2, hBar/2);
-    g.addColorStop(0, `rgba(220,200,120,${0.98*appear})`);
-    g.addColorStop(0.18, `rgba(210,180,80,${0.93*appear})`);
-    g.addColorStop(0.42, `rgba(180,140,60,${0.90*appear})`);
-    g.addColorStop(0.70, `rgba(140,100,40,${0.92*appear})`);
-    g.addColorStop(1, `rgba(90,60,20,${0.85*appear})`);
+    ctx.translate(p.x + sway, p.y);
+    ctx.rotate(p.angle * 0.25 + flutter);
+    // Paper gradient (money green)
+    const g = ctx.createLinearGradient(-wB/2, -hB/2, wB/2, hB/2);
+    const tint = p.tint;
+    g.addColorStop(0, `rgba(${Math.round(180*tint)}, ${Math.round(205*tint)}, ${Math.round(170*tint)}, ${0.92*appear})`);
+    g.addColorStop(1, `rgba(${Math.round(150*tint)}, ${Math.round(185*tint)}, ${Math.round(150*tint)}, ${0.95*appear})`);
     ctx.fillStyle = g;
-    const r = Math.min(7, hBar*0.38);
-    roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
-    ctx.shadowColor = 'rgba(60,40,10,0.18)';
-    ctx.shadowBlur = 8;
+    const r = Math.min(4, hB*0.25);
+    roundRect(ctx, -wB/2, -hB/2, wB, hB, r);
     ctx.fill();
-    ctx.shadowBlur = 0;
-    // Top bevel (Pseudo 3D Top)
+    // Border
+    ctx.strokeStyle = `rgba(40,80,50,${0.55*appear})`;
+    ctx.lineWidth = 1;
+    roundRect(ctx, -wB/2+0.8, -hB/2+0.8, wB-1.6, hB-1.6, Math.max(1.5, r-1));
+    ctx.stroke();
+    // Inner ornament: circle seal + $ symbol
+    const sealR = hB*0.32;
     ctx.beginPath();
-    ctx.moveTo(-wBar/2, -hBar/2);
-    ctx.lineTo(-wBar/2 + d, -hBar/2 - d);
-    ctx.lineTo(wBar/2 - d, -hBar/2 - d);
-    ctx.lineTo(wBar/2, -hBar/2);
-    ctx.closePath();
-    const topGrad = ctx.createLinearGradient(0, -hBar/2 - d, 0, -hBar/2 + d);
-    topGrad.addColorStop(0, `rgba(255,255,220,${0.92*appear})`);
-    topGrad.addColorStop(1, `rgba(180,150,60,${0.82*appear})`);
-    ctx.fillStyle = topGrad;
+    ctx.arc(0, 0, sealR, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(40,90,60,${0.45*appear})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = `rgba(220,240,225,${0.18*appear})`;
     ctx.fill();
-    // Left side bevel
+    // $ symbol (simple)
+    ctx.fillStyle = `rgba(30,70,40,${0.7*appear})`;
+    ctx.font = `${Math.max(8, hB*0.6)}px system-ui, Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('$', 0, 0);
+    // Serial-like lines
+    ctx.strokeStyle = `rgba(30,80,50,${0.3*appear})`;
+    ctx.lineWidth = 0.8;
     ctx.beginPath();
-    ctx.moveTo(-wBar/2, -hBar/2);
-    ctx.lineTo(-wBar/2 + d, -hBar/2 - d);
-    ctx.lineTo(-wBar/2 + d, hBar/2 - d);
-    ctx.lineTo(-wBar/2, hBar/2);
-    ctx.closePath();
-    const sideGrad = ctx.createLinearGradient(-wBar/2, 0, -wBar/2 + d, 0);
-    sideGrad.addColorStop(0, `rgba(110,80,20,${0.88*appear})`);
-    sideGrad.addColorStop(1, `rgba(180,150,60,${0.82*appear})`);
-    ctx.fillStyle = sideGrad;
-    ctx.fill();
-    // Metallic shine (sheen)
-    const sheenPos = (p.sheenOffset + p.life/2200) % 1;
-    const sheenX = -wBar/2 + sheenPos * wBar;
-    const sheenWidth = wBar*0.13;
-    const sheenGrad = ctx.createLinearGradient(sheenX - sheenWidth, 0, sheenX + sheenWidth, 0);
-    sheenGrad.addColorStop(0, 'rgba(255,255,255,0)');
-    sheenGrad.addColorStop(0.48, `rgba(255,255,255,${0.32*appear*lifeLeft})`);
-    sheenGrad.addColorStop(0.52, `rgba(255,255,255,${0.32*appear*lifeLeft})`);
-    sheenGrad.addColorStop(1, 'rgba(255,255,255,0)');
+    const offY = hB*0.28;
+    ctx.moveTo(-wB*0.36, -offY);
+    ctx.lineTo(wB*0.36, -offY);
+    ctx.moveTo(-wB*0.36, offY);
+    ctx.lineTo(wB*0.36, offY);
+    ctx.stroke();
+    // Subtle shine band
+    const sheenGrad = ctx.createLinearGradient(-wB/2, 0, wB/2, 0);
+    sheenGrad.addColorStop(0.45, `rgba(255,255,255,0)`);
+    sheenGrad.addColorStop(0.5, `rgba(255,255,255,${0.20*appear*lifeLeft})`);
+    sheenGrad.addColorStop(0.55, `rgba(255,255,255,0)`);
     ctx.globalCompositeOperation = 'lighter';
     ctx.fillStyle = sheenGrad;
-    roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
+    roundRect(ctx, -wB/2, -hB/2, wB, hB, r);
     ctx.fill();
     ctx.globalCompositeOperation = 'source-over';
-    // Subtle outline
-    ctx.strokeStyle = `rgba(80,60,20,${0.22*appear})`;
-    ctx.lineWidth = 1.2;
-    roundRect(ctx, -wBar/2, -hBar/2, wBar, hBar, r);
-    ctx.stroke();
     ctx.restore();
   }
 
@@ -403,7 +396,7 @@ if (heroLogo && heroVideo) {
   function draw(){
     ctx.clearRect(0,0,w,h);
     for(const p of particles){
-      if(p.shape === 'bar') drawBar(p);
+  if(p.shape === 'bill') drawBill(p);
     }
   }
 
@@ -416,14 +409,14 @@ if (heroLogo && heroVideo) {
   }
   requestAnimationFrame(loop);
 
-  // Scroll-basierte Spawn-Logik (deutlich erhöhte Rate & Grundrauschen)
+  // Scroll-basierte Spawn-Logik
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
     const delta = Math.abs(y - lastScrollY);
     lastScrollY = y;
-    // Reduce spawn rate for mobile
-    const spawnFactor = isMobile ? 0.18 : 0.32;
-    const baseSpawn = isMobile ? 0.08 : 0.18;
+    // Angepasste, moderate Rate (Bills sind größer als Partikel)
+    const spawnFactor = isMobile ? 0.12 : 0.22;
+    const baseSpawn = isMobile ? 0.05 : 0.12;
     accSpawn += delta * spawnFactor + (y>150 ? baseSpawn : baseSpawn/2);
     const toCreate = Math.floor(accSpawn);
     if(toCreate>0){
@@ -434,10 +427,10 @@ if (heroLogo && heroVideo) {
 
   // Periodische Bursts für "Show"-Effekt
   function burst(mult=1){
-    const base = isMobile ? 8 + Math.random()*8 : 16 + Math.random()*18;
+    const base = isMobile ? 6 + Math.random()*8 : 10 + Math.random()*12;
     spawn(Math.floor(base*mult));
   }
-  const burstInterval = setInterval(() => { burst(isMobile ? 1.2 : 1.5); }, isMobile ? 7000 : 5000);
+  const burstInterval = setInterval(() => { burst(isMobile ? 1.2 : 1.4); }, isMobile ? 7000 : 5500);
 
   // Section-Observer: Beim erstmaligen Erscheinen einer Section extra Glitzer
   const secObserver = new IntersectionObserver(entries => {
@@ -450,6 +443,6 @@ if (heroLogo && heroVideo) {
   }, { threshold:0.4 });
   document.querySelectorAll('section').forEach(s => secObserver.observe(s));
 
-  // Initial kräftiger Startschub
-  spawn(isMobile ? 32 : 70);
+  // Initiale Spawn-Menge
+  spawn(isMobile ? 20 : 40);
 })();
